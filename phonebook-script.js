@@ -16,6 +16,22 @@
     },
     returnAll: function () {
       return this.data;
+    },
+    search: function (searchTerm) {
+      if (this.data.length) {
+        for (var i = 0; i < this.data.length; i++) {
+          if (this.data[i].name.toLowerCase() == searchTerm.toLowerCase()) {
+            console.error(this.data[i]);
+            this.searchResults.push(this.data[i]);
+          }
+        }
+
+        return this.searchResults;
+      }
+      return this;
+    },
+    lastResults: function () {
+      return this.searchResults;
     }
   }
 
@@ -40,6 +56,30 @@ form.addEventListener('submit', function (event) {
   form.person.value = '';
   form.phone.value = '';
   form.email.value = '';
+
+  event.preventDefault();
+});
+
+var searchForm = document.getElementById('search');
+searchForm.addEventListener('submit', function (event) {
+  var results;
+  if (results !== undefined) {
+    results = null;
+  }
+  if (!window.contactList) {
+    window.contactList = $ab();
+  } else {
+    results = contactList.search(searchForm.search.value);
+  }
+  document.getElementById('results').innerHTML = '';
+  if (results.length > 0) {
+
+    for (var i = 0; i < results.length; i++) {
+      document.getElementById('results').innerHTML += '<div class="contact-item">Name:' + results[i].name + '<br>Phone:' + results[i].phone + '<br>Email:' + results[i].email + '</div><hr>';
+    }
+  } else {
+    document.getElementById('results').innerHTML += '<div class="contact-item">There are no results for this name</div><hr>';
+  }
 
   event.preventDefault();
 });
