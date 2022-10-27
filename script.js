@@ -113,3 +113,57 @@ document.getElementById('js-add-new').addEventListener('click', function () {
   document.getElementById('search-panel').style.display = 'none';
   document.getElementById('contact-panel').style.display = 'block';
 });
+
+let email = document.querySelector("#email")
+let phone = document.querySelector("#phone")
+let name = document.querySelector("#name")
+var addCont = document.body.getElementsByClassName('addcontact')[0];
+
+let isNameValiade = false;
+let isPhoneValiade = false;
+let isEmailValiade = true;
+
+function checkValidation(){
+  if(isNameValiade == true && isPhoneValiade == true && isEmailValiade == true){
+    addCont.disabled = false;
+  }else{
+    addCont.disabled = true;
+  }
+}
+
+email.oninput = function () {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
+    isEmailValiade = true;
+    checkValidation()
+    return;
+  }
+  if (email.value.length == 0) {
+    isEmailValiade = true;
+    checkValidation()
+    return;
+  }
+  isEmailValiade = false;
+  checkValidation()
+}
+name.oninput = function () {
+  name.value = name.value.trimLeft();
+  while(name.value.indexOf('  ') != -1){
+    name.value = name.value.replaceAll('  ', ' ');
+  }
+  if (name.value.length != 0) {
+    isNameValiade = true;
+    checkValidation()
+    return;
+  }
+  isNameValiade = false;
+  checkValidation()
+}
+phone.oninput = function () {
+  if (phone.value.length != 0) {
+    isPhoneValiade = true;
+    checkValidation()
+    return;
+  }
+  isPhoneValiade = false;
+  checkValidation()
+}

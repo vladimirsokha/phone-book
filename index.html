@@ -36,17 +36,17 @@
             <h1>Add a new contact</h1>
             <div>
                 <label>
-                    <input type="text" name="person" id="name" placeholder="Boris Johnsonuk" />
+                    <input type="text" onkeypress="return /^[a-zA-ZА-Яа-я\’ \u00C0-\u00FF]*$/i.test(event.key)" name="person" id="name" placeholder="Boris Johnsonuk" />
                 </label>
                 <label>
-                    <input type="text" name="phone" id="name" placeholder="380505550505" />
+                    <input type="text" onkeypress="return /[0-9]/i.test(event.key)" name="phone" id="phone" placeholder="380505550505" />
                 </label>
                 <label>
-                    <input type="text" name="email" id="name" placeholder="johnsonuk1964@example.com" />
+                    <input type="text" name="email" id="email" placeholder="johnsonuk1964@example.com" />
                 </label>
             </div>
             <div>
-                <input type="submit" value="Submit" />
+                <input type="submit" class="addcontact" value="Submit" disabled = ""/>
             </div>
     </div>
     <div id="show-panel" class="panel">
