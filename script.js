@@ -75,6 +75,7 @@ searchForm.addEventListener('submit', function (event) {
   if (results.length > 0) {
 
     for (var i = 0; i < results.length; i++) {
+      document.getElementById('results').innerHTML = '';
       document.getElementById('results').innerHTML += '<div class="contact-item">Name:' + results[i].name + '<br>Phone:' + results[i].phone + '<br>Email:' + results[i].email + '</div><hr>';
     }
   } else {
