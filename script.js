@@ -7,11 +7,23 @@
     data: [],
     searchResults: [],
     addNewContact: function (name, phone, email) {
-      this.data.push({
-        name: name,
-        phone: phone,
-        email: email
-      });
+      var isExist = false;
+      this.data.forEach(contact => {
+        if (contact.name == name && contact.phone == phone && contact.email == email) {
+          alert('loh');
+          isExist = true;
+          throw BreakException;
+        } 
+      })
+      if (!isExist) {
+        this.data.push({
+          name: name,
+          phone: phone,
+          email: email
+        });
+      }
+      console.log(this.data);
+      console.log()
       return this;
     },
     returnAll: function () {
@@ -34,7 +46,7 @@
     },
     clear: function(){
       this.searchResults = [];
-    }
+    },
   }
 
   PhoneBook.init = function () { }
@@ -49,6 +61,7 @@ if (!window.contactList) {
 
 var form = document.getElementById('contact');
 form.addEventListener('submit', function (event) {
+  event.preventDefault();
   if (!window.contactList) {
     window.contactList = $pb(form.person.value, form.phone.value, form.email.value);
   } else {
@@ -59,7 +72,7 @@ form.addEventListener('submit', function (event) {
   form.phone.value = '';
   form.email.value = '';
 
-  event.preventDefault();
+  
 });
 
 var searchForm = document.getElementById('search');
