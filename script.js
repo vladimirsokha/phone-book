@@ -20,8 +20,7 @@
     search: function (searchTerm) {
       if (this.data.length) {
         for (var i = 0; i < this.data.length; i++) {
-          if (this.data[i].name.toLowerCase() == searchTerm.toLowerCase()) {
-            console.error(this.data[i]);
+          if (this.data[i].name.toLowerCase().includes(searchTerm.toLowerCase())) {
             this.searchResults.push(this.data[i]);
           }
         }
@@ -30,8 +29,11 @@
       }
       return this;
     },
-    lastResults: function () {
+    lastResults: function (){
       return this.searchResults;
+    },
+    clear: function(){
+      this.searchResults = [];
     }
   }
 
@@ -62,23 +64,19 @@ form.addEventListener('submit', function (event) {
 
 var searchForm = document.getElementById('search');
 searchForm.addEventListener('submit', function (event) {
-  var results;
-  if (results !== undefined) {
-    results = null;
+  var results = [];
+  if (results !== []) {
+    results = [];
   }
-  if (!window.contactList) {
-    window.contactList = $pb(); ///////////////////
-  } else {
-    results = contactList.search(searchForm.search.value);
-  }
+  results = contactList.search(searchForm.search.value);
+  contactList.clear();
+
   document.getElementById('results').innerHTML = '';
   if (results.length > 0) {
     for (var i = 0; i < results.length; i++) {
-      document.getElementById('results').innerHTML = '';
       document.getElementById('results').innerHTML += '<div class="contact-item">Name:<b>' + results[i].name + "</b>" + '<br>Phone:' + results[i].phone + '<br>Email:' + results[i].email + '</div><hr>';
     }
   } else {
-    document.getElementById('results').innerHTML = '';
     document.getElementById('results').innerHTML += '<div class="contact-item">There are no results for this name</div><hr>';
   }
 
