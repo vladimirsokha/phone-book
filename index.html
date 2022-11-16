@@ -25,10 +25,10 @@
             </div>
             <div>
                 <label>
-                    <input type="text" name="search" id="search" placeholder="Enter name of contact" />
+                    <input type="text" name="search" onkeypress="return /^[a-zA-ZА-Яа-я\’ \u00C0-\u00FF]*$/i.test(event.key)" id="searchInput" placeholder="Enter name of contact" />
                 </label>
             </div>
-            <input type="submit" value="Submit" />
+            <input type="submit" class="searchbutton" value="Submit" disabled = ""/>
         </form>
     </div>
     <div id="contact-panel" class="panel">

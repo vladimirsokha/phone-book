@@ -67,18 +67,18 @@ searchForm.addEventListener('submit', function (event) {
     results = null;
   }
   if (!window.contactList) {
-    window.contactList = $ab();
+    window.contactList = $pb(); ///////////////////
   } else {
     results = contactList.search(searchForm.search.value);
   }
   document.getElementById('results').innerHTML = '';
   if (results.length > 0) {
-
     for (var i = 0; i < results.length; i++) {
       document.getElementById('results').innerHTML = '';
-      document.getElementById('results').innerHTML += '<div class="contact-item">Name:' + results[i].name + '<br>Phone:' + results[i].phone + '<br>Email:' + results[i].email + '</div><hr>';
+      document.getElementById('results').innerHTML += '<div class="contact-item">Name:<b>' + results[i].name + "</b>" + '<br>Phone:' + results[i].phone + '<br>Email:' + results[i].email + '</div><hr>';
     }
   } else {
+    document.getElementById('results').innerHTML = '';
     document.getElementById('results').innerHTML += '<div class="contact-item">There are no results for this name</div><hr>';
   }
 
@@ -91,7 +91,7 @@ document.getElementById('js-show-all').addEventListener('click', function () {
     var contacts = contactList.returnAll();
     if (contacts.length > 0) {
       for (var i = 0; i < contacts.length; i++) {
-        document.getElementById('show-panel').innerHTML += '<div class="contact-item">Name: ' + contacts[i].name + '<br>Phone: ' + contacts[i].phone + '<br>Email: ' + contacts[i].email + '</div><hr>';
+        document.getElementById('show-panel').innerHTML += '<div class="contact-item">Name: ' + "<b>" + contacts[i].name + "</b>" + '<br>Phone: ' + contacts[i].phone + '<br>Email: ' + contacts[i].email + '</div><hr>';
       }
     } else {
       document.getElementById('show-panel').innerHTML += '<div class="contact-item">You have no contacts. Why not add  a few?</div><hr>';
@@ -124,15 +124,16 @@ let isNameValiade = false;
 let isPhoneValiade = false;
 let isEmailValiade = true;
 
-function checkValidation(){
-  if(isNameValiade == true && isPhoneValiade == true && isEmailValiade == true){
+function checkValidation() {
+  if (isNameValiade == true && isPhoneValiade == true && isEmailValiade == true) {
     addCont.disabled = false;
-  }else{
+  } else {
     addCont.disabled = true;
   }
 }
 
 email.oninput = function () {
+  email.value = email.value.substr(0, 44);
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
     isEmailValiade = true;
     checkValidation()
@@ -147,8 +148,9 @@ email.oninput = function () {
   checkValidation()
 }
 name.oninput = function () {
+  name.value = name.value.substr(0, 36);
   name.value = name.value.trimLeft();
-  while(name.value.indexOf('  ') != -1){
+  while (name.value.indexOf('  ') != -1) {
     name.value = name.value.replaceAll('  ', ' ');
   }
   if (name.value.length != 0) {
@@ -160,6 +162,7 @@ name.oninput = function () {
   checkValidation()
 }
 phone.oninput = function () {
+  phone.value = phone.value.substr(0, 12);
   if (phone.value.length != 0) {
     isPhoneValiade = true;
     checkValidation()
@@ -167,4 +170,16 @@ phone.oninput = function () {
   }
   isPhoneValiade = false;
   checkValidation()
+}
+
+var searchButton = document.body.getElementsByClassName('searchbutton')[0];
+let searchInput = document.querySelector("#searchInput")
+searchInput.oninput = function () {
+  searchInput.value = searchInput.value.substr(0, 36);
+  if (searchInput.value.length != 0) {
+    searchButton.disabled = false;
+  }
+  else{
+    searchButton.disabled = true;
+  }
 }
